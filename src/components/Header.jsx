@@ -41,8 +41,10 @@ export default function Header({ introDismissed = false }) {
     return () => observer.disconnect();
   }, []);
 
+  const isHeaderVisible = introDismissed || scrolled;
+
   return (
-    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""} ${!isHeaderVisible ? "is-hidden-at-video" : "is-visible"}`}>
       {/* Dynamic Scroll Progress Line */}
       <div 
         className="scroll-progress-line" 
