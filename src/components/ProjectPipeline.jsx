@@ -1,4 +1,4 @@
-import { ArrowUpRight, Smartphone, Radio, FileText, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, Smartphone, CheckCircle2 } from "lucide-react";
 
 const PROJECTS = [
   {
@@ -9,33 +9,9 @@ const PROJECTS = [
     status: "Beta Q3 2026",
     statusType: "active",
     desc: "Das taktile Betriebssystem für gemeinsame Unternehmungen. Interaktive Vektorkarte, Swipe-Abstimmungen, CalDAV-Export und automatische Kostenteilung.",
-    tech: ["Offline-First", "Vektor-Karten", "CRDT-Sync", "Zero-Tracking"],
+    tech: ["Offline-First", "Vektor-Karten", "CRDT-Sync", "Zero-Tracking", "100% DSGVO"],
     linkText: "Live im Simulator",
     linkTarget: "#flaggschiff"
-  },
-  {
-    index: "02",
-    name: "Knot Spaces & Audio",
-    role: "Spatial Sound Lab",
-    platform: "macOS & iOS Spatial Audio",
-    status: "R&D Prototype",
-    statusType: "lab",
-    desc: "Geteilte generative Audio-Räume und kuratierte alpine Soundscapes für fokussiertes Arbeiten und unaufdringliche Präsenz.",
-    tech: ["Spatial Audio", "Web Audio API", "P2P Mesh"],
-    linkText: "Labor-Einblick anfragen",
-    linkTarget: "#kontakt"
-  },
-  {
-    index: "03",
-    name: "Knot Synapse",
-    role: "Knowledge System",
-    platform: "Desktop & Mobile",
-    status: "Konzept-Phase",
-    statusType: "concept",
-    desc: "Lokales, Markdown-basiertes Notizsystem für Gedanken und Routenplanung. Zero Cloud Lock-in, 100% Dateisystem-Souveränität.",
-    tech: ["Plaintext", "Local-First", "End-to-End Encryption"],
-    linkText: "Vormerken",
-    linkTarget: "#kontakt"
   }
 ];
 
@@ -48,11 +24,11 @@ export default function ProjectPipeline() {
         <div className="pipeline-header-row reveal-on-scroll">
           <div className="pipeline-title-group">
             <h2 className="pipeline-main-heading">
-              Aktive Projekte &amp; <em>Software-Labor.</em>
+              Aktives Projekt &amp; <em>Flaggschiff.</em>
             </h2>
           </div>
           <p className="pipeline-lead-text">
-            Wir bauen gezielt wenige, außergewöhnliche Werkzeuge. Jedes Projekt folgt unserem Credo von absoluter Daten-Souveränität und spürbarem taktilem Handwerk.
+            Unser alleiniger Fokus gilt dem Knot Event-Planer. Wir bündeln unsere gesamte Ingenieurskunst in dieses taktile Werkzeug für echte gemeinsame Erlebnisse.
           </p>
         </div>
 

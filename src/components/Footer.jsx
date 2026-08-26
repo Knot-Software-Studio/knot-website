@@ -34,8 +34,8 @@ export default function Footer() {
             <span className="footer-col-kicker">PRODUKTE</span>
             <ul className="footer-links-clean">
               <li><a href="#flaggschiff">Event-Planer (Flaggschiff)</a></li>
-              <li><a href="#projekte">Spaces &amp; Audio R&amp;D</a></li>
-              <li><a href="#projekte">Synapse Notes</a></li>
+              <li><a href="#kontakt">Apple TestFlight Beta</a></li>
+              <li><a href="#kontakt">Google Play Beta</a></li>
             </ul>
           </div>
 

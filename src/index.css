@@ -247,7 +247,10 @@ body {
   backdrop-filter: blur(28px) saturate(190%);
   -webkit-backdrop-filter: blur(28px) saturate(190%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: background-color var(--duration-normal) var(--ease-out),
+              padding var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
 }
 
 .site-header.is-scrolled {
@@ -326,7 +329,9 @@ body {
   font-weight: 600;
   padding: 6px 16px;
   border-radius: var(--radius-pill);
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
 }
 
 .nav-item:hover {
@@ -390,7 +395,9 @@ body {
   font-size: 0.84rem;
   font-weight: 700;
   text-decoration: none;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
 .btn-header-cta:hover {
@@ -533,43 +540,56 @@ body {
   gap: 16px;
 }
 
-/* Distilled Studio Standards Bar (Apple-Style Frosted Pill Dock) */
-.hero-standards-bar {
+/* Apple-Style Studio Specification Pills Cluster */
+.hero-spec-pills-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.hero-spec-pill {
   display: inline-flex;
   align-items: center;
-  gap: clamp(16px, 2.5vw, 32px);
-  padding: 16px 32px;
-  background: rgba(14, 16, 23, 0.72);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  gap: 8px;
+  background: rgba(14, 16, 23, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-pill);
-  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-  flex-wrap: wrap;
+  padding: 8px 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  transition: transform var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
 }
 
-.standard-item {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+.hero-spec-pill:hover {
+  transform: translateY(-2px);
+  border-color: rgba(190, 192, 233, 0.35);
+  background: rgba(20, 24, 36, 0.85);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-.standard-value {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: 700;
+.hero-spec-pill .pill-icon {
   color: var(--brand-frost);
+  flex-shrink: 0;
 }
 
-.standard-label {
-  font-size: 0.84rem;
+.hero-spec-pill .pill-val {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.hero-spec-pill .pill-lbl {
+  font-size: 0.82rem;
   color: var(--text-secondary);
-}
-
-.standard-divider {
-  width: 1px;
-  height: 16px;
-  background: rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
 }
 
 /* Hero Right Sidebar Rail & Apple-Style Telemetry Dock */
@@ -777,7 +797,10 @@ body {
   -webkit-backdrop-filter: blur(16px);
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: background-color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
 }
 
 .feature-nav-block:hover {
@@ -942,7 +965,9 @@ body {
   border-radius: var(--radius-pill);
   cursor: pointer;
   white-space: nowrap;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
 .m-chip:hover {
@@ -1596,7 +1621,9 @@ body {
   padding: 5px 3px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
 .t-switch.is-active {
@@ -1672,7 +1699,9 @@ body {
   align-items: center;
   justify-content: center;
   color: var(--brand-frost);
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
 }
 
 .poll-choice-item.is-checked .p-radio {
@@ -1708,7 +1737,7 @@ body {
   padding: 7px 10px;
   cursor: pointer;
   transition: opacity var(--duration-fast) var(--ease-out),
-              background var(--duration-fast) var(--ease-out);
+              background-color var(--duration-fast) var(--ease-out);
 }
 
 .task-item-line.is-done {
@@ -1724,7 +1753,9 @@ body {
   align-items: center;
   justify-content: center;
   color: var(--accent-green);
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
 }
 
 .task-item-line.is-done .t-box {
@@ -2051,7 +2082,10 @@ body {
   padding: 8px 18px;
   border-radius: var(--radius-pill);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
 }
 
 .proj-action-link:hover {
@@ -2318,7 +2352,8 @@ body {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
 .desk-channel-line:hover {
@@ -2358,7 +2393,9 @@ body {
   font-size: 0.74rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
 }
 
 .btn-ch-copy:hover {
@@ -2428,7 +2465,10 @@ body {
   font-size: 0.86rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
 }
 
 .seg-btn:active {
@@ -2476,7 +2516,9 @@ body {
   color: var(--text-primary);
   font-family: var(--font-body);
   outline: none;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
 }
 
 .architectural-input:focus {
@@ -2730,17 +2772,18 @@ body {
   .btn-architectural {
     width: 100%;
   }
-  .hero-standards-bar {
-    border-radius: var(--radius-lg);
-    padding: 16px;
-    gap: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+  .hero-spec-pills-cluster {
+    gap: 8px;
+    margin-top: 28px;
   }
-  .standard-divider {
-    display: none;
+  .hero-spec-pill {
+    padding: 6px 12px;
+  }
+  .hero-spec-pill .pill-val {
+    font-size: 0.8rem;
+  }
+  .hero-spec-pill .pill-lbl {
+    font-size: 0.76rem;
   }
   .showcase-header-row, .pipeline-header-row, .manifesto-header-row, .contact-header-row {
     flex-direction: column;

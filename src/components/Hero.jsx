@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, Shield, Cpu, Activity } from "lucide-react";
+import { ArrowDown, ArrowRight, Shield, Cpu, Activity, ShieldCheck, Zap, Smartphone, Lock } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -28,24 +28,23 @@ export default function Hero() {
               <span className="studio-spec">Software die verbindet</span>
             </div>
 
-            {/* Sculptural Left-Aligned Title */}
+            {/* Monumental Editorial Headline */}
             <div className="hero-statement-wrap">
               <h1 className="hero-sculptural-title">
-                Software die <em>verbindet.</em><br />
+                Software die <em>verbindet.</em>
+                <br />
                 Für Momente, die <em>bleiben.</em>
               </h1>
-
+              
               <p className="hero-manifesto-lead">
-                Wir bauen keine Apps, die dich am Bildschirm festhalten. 
-                Knot entwickelt radikal flüssige Werkzeuge für reale Erlebnisse, 
-                gemeinsame Unternehmungen und echte menschliche Nähe — ohne Tracking, 
-                ohne Werbe-Algorithmen und ohne Kompromisse.
+                Wir entwickeln taktile Werkzeuge für gemeinsame Unternehmungen. 
+                Keine Werbetracker, keine Ablenkung, 100% DSGVO-konforme Daten-Souveränität aus Österreich.
               </p>
 
-              {/* Action Desk */}
+              {/* Primary Actions */}
               <div className="hero-action-desk">
                 <a href="#flaggschiff" className="btn-architectural btn-primary-brand">
-                  <span>Flaggschiff ausprobieren</span>
+                  <span>Flaggschiff erkunden</span>
                   <ArrowDown size={15} />
                 </a>
                 <a href="#kontakt" className="btn-architectural btn-ghost-line">
@@ -55,26 +54,27 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Distilled Studio Standards Bar */}
-            <div className="hero-standards-bar">
-              <div className="standard-item">
-                <span className="standard-value">0</span>
-                <span className="standard-label">Werbetracker</span>
+            {/* Apple-Style Studio Specification Pills */}
+            <div className="hero-spec-pills-cluster">
+              <div className="hero-spec-pill">
+                <ShieldCheck size={14} className="pill-icon" />
+                <span className="pill-val">0</span>
+                <span className="pill-lbl">Werbetracker</span>
               </div>
-              <div className="standard-divider"></div>
-              <div className="standard-item">
-                <span className="standard-value">&lt;100ms</span>
-                <span className="standard-label">Physik-Reaktionszeit</span>
+              <div className="hero-spec-pill">
+                <Zap size={14} className="pill-icon" />
+                <span className="pill-val">&lt;100ms</span>
+                <span className="pill-lbl">Latenz</span>
               </div>
-              <div className="standard-divider"></div>
-              <div className="standard-item">
-                <span className="standard-value">iOS &amp; Android</span>
-                <span className="standard-label">Native Apps + Web-RSVP</span>
+              <div className="hero-spec-pill">
+                <Smartphone size={14} className="pill-icon" />
+                <span className="pill-val">iOS &amp; Android</span>
+                <span className="pill-lbl">Native Apps</span>
               </div>
-              <div className="standard-divider"></div>
-              <div className="standard-item">
-                <span className="standard-value">100% DSGVO</span>
-                <span className="standard-label">Österreichische Server</span>
+              <div className="hero-spec-pill">
+                <Lock size={14} className="pill-icon" />
+                <span className="pill-val">100% DSGVO</span>
+                <span className="pill-lbl">Österreichische Server</span>
               </div>
             </div>
 
