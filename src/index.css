@@ -114,6 +114,67 @@ body {
   padding-right: clamp(24px, 4.5vw, 96px);
 }
 
+/* ==========================================================================
+   AMBIENT DYNAMIC PARALLAX MESH & SPATIAL DEPTH (Apple Overdrive)
+   ========================================================================== */
+
+.ambient-parallax-mesh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  -webkit-filter: blur(110px);
+  opacity: 0.22;
+  will-change: transform;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out);
+}
+
+.orb-frost-top {
+  width: 720px;
+  height: 720px;
+  top: -120px;
+  right: 2%;
+  background: radial-gradient(circle, rgba(190, 192, 233, 0.45) 0%, rgba(151, 155, 193, 0.15) 50%, transparent 70%);
+}
+
+.orb-periwinkle-mid {
+  width: 800px;
+  height: 800px;
+  top: 32vh;
+  left: -180px;
+  background: radial-gradient(circle, rgba(151, 155, 193, 0.35) 0%, rgba(92, 98, 130, 0.18) 50%, transparent 70%);
+  opacity: 0.18;
+}
+
+.orb-indigo-lower {
+  width: 860px;
+  height: 860px;
+  top: 68vh;
+  right: -120px;
+  background: radial-gradient(circle, rgba(92, 98, 130, 0.45) 0%, rgba(32, 42, 69, 0.22) 50%, transparent 70%);
+  opacity: 0.24;
+}
+
+.orb-frost-bottom {
+  width: 680px;
+  height: 680px;
+  top: 110vh;
+  left: 8%;
+  background: radial-gradient(circle, rgba(190, 192, 233, 0.35) 0%, rgba(151, 155, 193, 0.12) 50%, transparent 70%);
+  opacity: 0.16;
+}
+
 /* Ambient Structural Grid Guides & Depth Layers */
 .ambient-grid-guides {
   position: fixed;
@@ -135,7 +196,7 @@ body {
 .ambient-guide-line {
   width: 1px;
   height: 100%;
-  background: linear-gradient(180deg, rgba(190, 192, 233, 0.04) 0%, rgba(190, 192, 233, 0.01) 50%, rgba(190, 192, 233, 0.04) 100%);
+  background: linear-gradient(180deg, rgba(190, 192, 233, 0.05) 0%, rgba(190, 192, 233, 0.01) 50%, rgba(190, 192, 233, 0.05) 100%);
 }
 
 .scroll-progress-line {
@@ -149,6 +210,50 @@ body {
   z-index: 1001;
   pointer-events: none;
   box-shadow: 0 0 12px rgba(190, 192, 233, 0.5);
+}
+
+/* Dynamic Frosted Sheen Overlay on Interactive Glass Cards */
+.sidebar-depth-card,
+.manifesto-grid-cell,
+.studio-manifesto-quote,
+.desk-inner-content,
+.architectural-form,
+.feature-nav-block {
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-depth-card::before,
+.manifesto-grid-cell::before,
+.studio-manifesto-quote::before,
+.desk-inner-content::before,
+.architectural-form::before,
+.feature-nav-block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    700px circle at 50% calc(var(--scroll-y, 0px) * 0.12 - 40px),
+    rgba(255, 255, 255, 0.06),
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.sidebar-depth-card > *,
+.manifesto-grid-cell > *,
+.studio-manifesto-quote > *,
+.desk-inner-content > *,
+.architectural-form > *,
+.feature-nav-block > * {
+  position: relative;
+  z-index: 2;
 }
 
 /* Scroll Reveal States */
