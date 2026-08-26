@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "sonner";
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
@@ -8,8 +9,34 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 
 export default function App() {
+  useEffect(() => {
+    // Global Scroll Reveal Observer with threshold
+    const revealElements = document.querySelectorAll(".reveal-on-scroll");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+          }
+        });
+      },
+      { rootMargin: "0px 0px -80px 0px", threshold: 0.08 }
+    );
+
+    revealElements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="app-root">
+      {/* Background Architectural Grid Lines for Spatial Depth */}
+      <div className="ambient-grid-guides" aria-hidden="true">
+        <div className="ambient-guide-line"></div>
+        <div className="ambient-guide-line"></div>
+        <div className="ambient-guide-line"></div>
+        <div className="ambient-guide-line"></div>
+      </div>
+
       <Toaster
         position="bottom-right"
         toastOptions={{

@@ -45,9 +45,8 @@ export default function ProjectPipeline() {
       <div className="container">
         
         {/* Section Header with Instrument Serif */}
-        <div className="pipeline-header-row">
+        <div className="pipeline-header-row reveal-on-scroll">
           <div className="pipeline-title-group">
-            <span className="section-kicker-mono">STUDIO PIPELINE · R&amp;D INDEX</span>
             <h2 className="pipeline-main-heading">
               Aktive Projekte &amp; <em>Software-Labor.</em>
             </h2>
@@ -60,7 +59,7 @@ export default function ProjectPipeline() {
         {/* Architectural Project Table / Rows */}
         <div className="project-index-table">
           {PROJECTS.map((project) => (
-            <div key={project.index} className="project-index-row">
+            <div key={project.index} className="project-index-row reveal-on-scroll">
               
               {/* Col 1: Number & Status */}
               <div className="proj-col-num">

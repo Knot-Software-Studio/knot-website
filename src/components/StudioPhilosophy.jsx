@@ -1,33 +1,27 @@
-import { Sparkles, Shield, HeartHandshake, Compass } from "lucide-react";
-
 const PRINCIPLES = [
   {
     num: "01",
-    kicker: "AUFMERKSAMKEITS-ÖKONOMIE",
     title: "Reales Leben vor Bildschirmzeit",
-    desc: "Unsere Software misst ihren Erfolg daran, wie schnell du dein Smartphone wieder wegsteckst und den Augenblick mit deinen Begleitern genießt. Keine endlosen Feeds, keine Gamification-Tricks, kein Doomscrolling.",
-    impact: "Schnelle Entscheidungen in unter 60 Sekunden."
+    desc: "Unsere Software misst ihren Erfolg daran, wie schnell du dein Smartphone wieder wegsteckst und den Augenblick genießt. Keine endlosen Feeds, kein Doomscrolling.",
+    impact: "Entscheidungen in unter 60 Sekunden."
   },
   {
     num: "02",
-    kicker: "PRIVATSPHÄRE ALS FUNDAMENT",
-    title: "Null Werbetracking & absolute Datensouveränität",
-    desc: "Wir monetarisieren keine persönlichen Daten, verkaufen kein Nutzerverhalten und binden keine externen Werbenetzwerke ein. Deine Unternehmungen und geteilten Kalender gehören ausschließlich deiner Gruppe.",
-    impact: "Keine Tracker · 100% DSGVO · ISO-zertifizierte EU-Server."
+    title: "Null Werbetracking & Datensouveränität",
+    desc: "Wir monetarisieren keine persönlichen Daten und binden keine externen Werbenetzwerke ein. Deine Unternehmungen gehören ausschließlich deiner Gruppe.",
+    impact: "Zero Tracker · 100% DSGVO · Österreichische EU-Server."
   },
   {
     num: "03",
-    kicker: "GESTALTUNGS-PHYSIK",
-    title: "Spürbare Trägheit & Sub-100ms Flüssigkeit",
-    desc: "Jede Geste im Knot-Ökosystem reagiert mit echten physikalischen Trägheitsmomenten. Inspiriert von den höchsten Standards der Apple Human Interface Guidelines und Material 3 Expressive Motion.",
-    impact: "Haptisches Feedback und sub-100ms Interaktionslatenz."
+    title: "Spürbare Physik & Sub-100ms Latenz",
+    desc: "Jede Geste im Knot-Ökosystem reagiert mit echten physikalischen Trägheitsmomenten, inspiriert von Apple HIG und Material 3 Expressive Motion.",
+    impact: "Haptisches Feedback und sub-100ms Interaktionsgefühl."
   },
   {
     num: "04",
-    kicker: "PROVENIENZ & HALTUNG",
-    title: "Österreichische Ingenieurskunst mit Haltung",
-    desc: "Als unabhängiges Studio aus Graz und Wien entwickeln wir Software für Langlebigkeit und Verlässlichkeit — fernab von kurzfristigem Silicon-Valley-Hype. Wir bauen Werkzeuge, die wir selbst täglich nutzen.",
-    impact: "Indie-finanziert · Unabhängig · Handwerklich."
+    title: "Österreichische Ingenieurskunst",
+    desc: "Als unabhängiges Indie-Studio aus Graz und Wien entwickeln wir Software für Langlebigkeit und Verlässlichkeit — fernab von kurzfristigem Hype.",
+    impact: "Unabhängig · Handwerklich · Langlebig."
   }
 ];
 
@@ -36,10 +30,9 @@ export default function StudioPhilosophy() {
     <section id="manifest" className="manifesto-architectural-section">
       <div className="container">
         
-        {/* Section Header with Instrument Serif */}
-        <div className="manifesto-header-row">
+        {/* Section Header */}
+        <div className="manifesto-header-row reveal-on-scroll">
           <div className="manifesto-title-group">
-            <span className="section-kicker-mono">STUDIO MANIFEST &amp; PHILOSOPHIE</span>
             <h2 className="manifesto-main-heading">
               Vier Prinzipien, nach denen wir <em>Software bauen.</em>
             </h2>
@@ -50,13 +43,12 @@ export default function StudioPhilosophy() {
           </p>
         </div>
 
-        {/* 2x2 Architectural Grid with 1px Structural Dividers */}
+        {/* 2x2 Grid Matrix */}
         <div className="manifesto-grid-matrix">
           {PRINCIPLES.map((item) => (
-            <div key={item.num} className="manifesto-grid-cell">
+            <div key={item.num} className="manifesto-grid-cell reveal-on-scroll">
               <div className="cell-top-line">
                 <span className="cell-number">{item.num}</span>
-                <span className="cell-kicker">{item.kicker}</span>
               </div>
               <h3 className="cell-title">{item.title}</h3>
               <p className="cell-desc">{item.desc}</p>
@@ -67,8 +59,8 @@ export default function StudioPhilosophy() {
           ))}
         </div>
 
-        {/* Architectural Studio Commitment Quote in Instrument Serif */}
-        <div className="studio-manifesto-quote">
+        {/* Architectural Studio Commitment Quote */}
+        <div className="studio-manifesto-quote reveal-on-scroll">
           <div className="quote-mono-mark">»</div>
           <p className="quote-large-text">
             Technologie sollte uns im echten Leben <em>zusammenbringen</em> — nicht voneinander isolieren. 

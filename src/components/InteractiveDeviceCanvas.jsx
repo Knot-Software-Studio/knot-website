@@ -20,7 +20,11 @@ import {
   CalendarCheck,
   Smartphone,
   ChevronRight,
-  Globe
+  Globe,
+  Mountain,
+  Film,
+  Compass,
+  UtensilsCrossed
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -79,7 +83,7 @@ const SWIPE_DECK_ITEMS = [
     title: "Klettersteig & Bergsee-Sprung",
     subtitle: "Tagesausflug · 4–6 Personen",
     category: "Abenteuer",
-    imageEmoji: "🏔️",
+    Icon: Mountain,
     gradient: "linear-gradient(135deg, #181C2B 0%, #0F121C 100%)",
     accentColor: "#BEC0E9",
     dateHint: "Wochenende empfohlen",
@@ -92,7 +96,7 @@ const SWIPE_DECK_ITEMS = [
     title: "Rooftop Cinema & Wine Night",
     subtitle: "Abend-Date · 2–4 Personen",
     category: "Kultur & Genuss",
-    imageEmoji: "🎬",
+    Icon: Film,
     gradient: "linear-gradient(135deg, #221A2E 0%, #120D1A 100%)",
     accentColor: "#D8B4FE",
     dateHint: "Dienstag oder Donnerstag",
@@ -105,7 +109,7 @@ const SWIPE_DECK_ITEMS = [
     title: "Kanu-Tour & Lagerfeuer",
     subtitle: "Wochenendtrip · 4–8 Personen",
     category: "Outdoor",
-    imageEmoji: "🛶",
+    Icon: Compass,
     gradient: "linear-gradient(135deg, #142422 0%, #0A1413 100%)",
     accentColor: "#6EE7B7",
     dateHint: "Samstag ganztags",
@@ -118,7 +122,7 @@ const SWIPE_DECK_ITEMS = [
     title: "Secret Supper Club Tasting",
     subtitle: "Dinner · 6 Personen",
     category: "Food",
-    imageEmoji: "🍽️",
+    Icon: UtensilsCrossed,
     gradient: "linear-gradient(135deg, #2A1F1B 0%, #150F0D 100%)",
     accentColor: "#FDBA74",
     dateHint: "Freitagabend",
@@ -163,6 +167,10 @@ export default function InteractiveDeviceCanvas() {
   const [selectedMapEvent, setSelectedMapEvent] = useState(MAP_EVENTS[0]);
   const [mapCategory, setMapCategory] = useState("Alle");
 
+  const filteredMapEvents = mapCategory === "Alle" 
+    ? MAP_EVENTS 
+    : MAP_EVENTS.filter(e => e.category === mapCategory);
+
   // Swipe Deck State & Drag Physics
   const [deckIndex, setDeckIndex] = useState(0);
   const [lastAction, setLastAction] = useState(null);
@@ -171,19 +179,33 @@ export default function InteractiveDeviceCanvas() {
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef({ x: 0, y: 0 });
 
+  // Dynamic 3D tilt perspective for chassis depth
+  const [chassisTilt, setChassisTilt] = useState({ x: 0, y: 0 });
+  const chassisRef = useRef(null);
+
+  const handleChassisMouseMove = (e) => {
+    if (!chassisRef.current) return;
+    const rect = chassisRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const tiltX = -(y / (rect.height / 2)) * 3.5;
+    const tiltY = (x / (rect.width / 2)) * 3.5;
+    setChassisTilt({ x: tiltX, y: tiltY });
+  };
+
+  const handleChassisMouseLeave = () => {
+    setChassisTilt({ x: 0, y: 0 });
+  };
+
   // Tools Sub-tab state
   const [toolSubTab, setToolSubTab] = useState("poll");
   const [votedId, setVotedId] = useState("v1");
   const [tasks, setTasks] = useState([
-    { id: 1, text: "Gaskocher & Espresso", person: "Lukas", done: true },
-    { id: 2, text: "Erste-Hilfe-Set & Karten", person: "Sophie", done: true },
-    { id: 3, text: "Proviant & Snacks für Tag 1", person: "Du", done: false },
-    { id: 4, text: "Bluetooth Speaker & Playlist", person: "Max", done: false },
+    { id: "t1", title: "Bergschuhe & Grödel", assignee: "Lukas", done: true },
+    { id: "t2", title: "Kamera & Drohne", assignee: "Sophie", done: true },
+    { id: "t3", title: "Erste-Hilfe & Biwaksack", assignee: "Max", done: false },
+    { id: "t4", title: "Kaiserschmarrn-Zutaten", assignee: "Elena", done: false },
   ]);
-
-  const filteredMapEvents = mapCategory === "Alle" 
-    ? MAP_EVENTS 
-    : MAP_EVENTS.filter(e => e.category === mapCategory);
 
   const handleSwipe = (direction) => {
     const currentCard = SWIPE_DECK_ITEMS[deckIndex % SWIPE_DECK_ITEMS.length];
@@ -212,27 +234,40 @@ export default function InteractiveDeviceCanvas() {
 
   const handlePointerDown = (e) => {
     if (lastAction) return;
-    setIsDragging(true);
     dragStartRef.current = { x: e.clientX, y: e.clientY };
-    if (e.target.setPointerCapture) {
-      try {
-        e.target.setPointerCapture(e.pointerId);
-      } catch (err) {
-        // Ignored
-      }
-    }
   };
 
   const handlePointerMove = (e) => {
-    if (!isDragging || lastAction) return;
+    if (lastAction || !dragStartRef.current) return;
     const deltaX = e.clientX - dragStartRef.current.x;
     const deltaY = e.clientY - dragStartRef.current.y;
-    setDragOffset({ x: deltaX, y: deltaY });
+
+    // Detect horizontal drag intent vs vertical page scroll
+    if (!isDragging) {
+      if (Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        setIsDragging(true);
+        if (e.target.setPointerCapture) {
+          try {
+            e.target.setPointerCapture(e.pointerId);
+          } catch (err) {
+            // Ignored
+          }
+        }
+      }
+    }
+
+    if (isDragging) {
+      setDragOffset({ x: deltaX, y: deltaY });
+    }
   };
 
   const handlePointerUp = () => {
-    if (!isDragging) return;
+    if (!isDragging) {
+      dragStartRef.current = { x: 0, y: 0 };
+      return;
+    }
     setIsDragging(false);
+    dragStartRef.current = { x: 0, y: 0 };
     if (dragOffset.x > 75) {
       handleSwipe("like");
     } else if (dragOffset.x < -75) {
@@ -259,10 +294,9 @@ export default function InteractiveDeviceCanvas() {
     <section id="flaggschiff" className="showcase-architectural-section">
       <div className="container">
         
-        {/* Section Header with Instrument Serif Heading */}
-        <div className="showcase-header-row">
+        {/* Section Header */}
+        <div className="showcase-header-row reveal-on-scroll">
           <div className="showcase-lead-block">
-            <span className="section-kicker-mono">FLAGGSCHIFF-PRODUKT 01</span>
             <h2 className="showcase-main-heading">
               Knot Event-Planer <em>für iOS &amp; Android.</em>
             </h2>
@@ -280,24 +314,20 @@ export default function InteractiveDeviceCanvas() {
         {/* 2-Column Split: Architectural Feature Switcher + Tactile Simulator */}
         <div className="showcase-split-grid">
           
-          {/* LEFT: Feature Director & Architectural Controllers */}
-          <div className="showcase-controls-column">
+          {/* LEFT: Feature Director & Controllers */}
+          <div className="showcase-controls-column reveal-on-scroll">
             
             {/* Feature 01 */}
             <div 
               className={`feature-nav-block ${activeTab === "map" ? "is-selected" : ""}`}
               onClick={() => setActiveTab("map")}
             >
-              <div className="feat-number">01</div>
               <div className="feat-body">
+                <span className="feat-kicker-mono">01 / MAP TRAVERSAL</span>
                 <h3 className="feat-title">Karten-Entdeckung</h3>
                 <p className="feat-desc">
                   Durchquere Ausflugsziele, Berghütten und Kulturspots direkt auf einer interaktiven Vektorkarte für Österreich.
                 </p>
-                <div className="feat-tag-row">
-                  <span className="f-tag">SVG Vektoren</span>
-                  <span className="f-tag">Ortsfilter</span>
-                </div>
               </div>
             </div>
 
@@ -306,16 +336,12 @@ export default function InteractiveDeviceCanvas() {
               className={`feature-nav-block ${activeTab === "swipe" ? "is-selected" : ""}`}
               onClick={() => setActiveTab("swipe")}
             >
-              <div className="feat-number">02</div>
               <div className="feat-body">
+                <span className="feat-kicker-mono">02 / FLUID GESTURES</span>
                 <h3 className="feat-title">Swipe-Deck Inspiration</h3>
                 <p className="feat-desc">
                   Stimme Ideen mit Freunden ab. Ziehe die Karte mit Finger oder Maus nach rechts zum Merken oder links zum Überspringen.
                 </p>
-                <div className="feat-tag-row">
-                  <span className="f-tag">Trägheitsphysik</span>
-                  <span className="f-tag">Gestensteuerung</span>
-                </div>
               </div>
             </div>
 
@@ -324,16 +350,12 @@ export default function InteractiveDeviceCanvas() {
               className={`feature-nav-block ${activeTab === "calendar" ? "is-selected" : ""}`}
               onClick={() => setActiveTab("calendar")}
             >
-              <div className="feat-number">03</div>
               <div className="feat-body">
+                <span className="feat-kicker-mono">03 / TIMELINE SYNC</span>
                 <h3 className="feat-title">Kalender &amp; Zeitleiste</h3>
                 <p className="feat-desc">
                   Der Tag im Überblick mit Tagesstreifen, Zu- und Absagen sowie nahtloser Anbindung an Apple iCal und Google Calendar.
                 </p>
-                <div className="feat-tag-row">
-                  <span className="f-tag">CalDAV / .ics</span>
-                  <span className="f-tag">Offline-First</span>
-                </div>
               </div>
             </div>
 
@@ -342,25 +364,29 @@ export default function InteractiveDeviceCanvas() {
               className={`feature-nav-block ${activeTab === "tools" ? "is-selected" : ""}`}
               onClick={() => setActiveTab("tools")}
             >
-              <div className="feat-number">04</div>
               <div className="feat-body">
+                <span className="feat-kicker-mono">04 / ZERO-CHAOS TOOLS</span>
                 <h3 className="feat-title">Gruppen-Werkzeuge</h3>
                 <p className="feat-desc">
                   1-Klick Terminabstimmungen, geteilte Packlisten und transparenter Kostenausgleich ohne WhatsApp-Chaos.
                 </p>
-                <div className="feat-tag-row">
-                  <span className="f-tag">Web-RSVP</span>
-                  <span className="f-tag">Automatischer Split</span>
-                </div>
               </div>
             </div>
 
           </div>
 
           {/* RIGHT: Photorealistic Mobile Hardware Frame */}
-          <div className="showcase-hardware-column">
+          <div className="showcase-hardware-column reveal-on-scroll">
             
-            <div className="hardware-chassis">
+            <div 
+              ref={chassisRef}
+              className="hardware-chassis"
+              onMouseMove={handleChassisMouseMove}
+              onMouseLeave={handleChassisMouseLeave}
+              style={{
+                transform: `perspective(1000px) rotateX(${chassisTilt.x}deg) rotateY(${chassisTilt.y}deg)`,
+              }}
+            >
               
               {/* Dynamic Island */}
               <div className="hardware-island">
@@ -499,7 +525,9 @@ export default function InteractiveDeviceCanvas() {
                           <span className="c-pill" style={{ color: currentSwipeCard.accentColor }}>
                             {currentSwipeCard.category}
                           </span>
-                          <span className="c-emoji">{currentSwipeCard.imageEmoji}</span>
+                          <span className="c-icon-badge" style={{ color: currentSwipeCard.accentColor }}>
+                            <currentSwipeCard.Icon size={22} strokeWidth={2} />
+                          </span>
                         </div>
 
                         <div className="card-center-body">
@@ -655,7 +683,6 @@ export default function InteractiveDeviceCanvas() {
                     <div className="tools-pane-wrap">
                       {toolSubTab === "poll" && (
                         <div className="poll-pane">
-                          <span className="pane-kicker-mono">TERMINABSTIMMUNG</span>
                           <h4 className="pane-main-title">Wochenende in den Bergen</h4>
                           
                           <div className="poll-choices-list">
@@ -679,7 +706,7 @@ export default function InteractiveDeviceCanvas() {
                                 >
                                   <div 
                                     className="poll-progress-fill" 
-                                    style={{ width: `${percent}%` }}
+                                    style={{ transform: `scaleX(${percent / 100})` }}
                                   />
                                   <div className="poll-content-row">
                                     <div className="p-radio">
@@ -697,7 +724,6 @@ export default function InteractiveDeviceCanvas() {
 
                       {toolSubTab === "tasks" && (
                         <div className="tasks-pane">
-                          <span className="pane-kicker-mono">GETEILTE PACKLISTE</span>
                           <h4 className="pane-main-title">Wer packt was ein?</h4>
 
                           <div className="tasks-list-stack">
@@ -722,7 +748,6 @@ export default function InteractiveDeviceCanvas() {
 
                       {toolSubTab === "split" && (
                         <div className="split-pane">
-                          <span className="pane-kicker-mono">FAIRER KOSTENAUSGLEICH</span>
                           <h4 className="pane-main-title">Gemeinsame Ausgaben</h4>
 
                           <div className="split-total-block">

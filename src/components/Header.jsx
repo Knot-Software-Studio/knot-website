@@ -4,17 +4,49 @@ import { Menu, X, ArrowUpRight } from "lucide-react";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 20);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight > 0) {
+        setScrollProgress(Math.min(100, Math.max(0, (scrollY / docHeight) * 100)));
+      }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const sections = ["flaggschiff", "projekte", "manifest", "kontakt"];
+    const sectionElements = sections.map((id) => document.getElementById(id)).filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -55% 0px" }
+    );
+
+    sectionElements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+      {/* Dynamic Scroll Progress Line */}
+      <div 
+        className="scroll-progress-line" 
+        style={{ transform: `scaleX(${scrollProgress / 100})` }}
+        aria-hidden="true"
+      />
       <div className="header-inner">
         {/* Studio Brand Mark with Official Logo */}
         <a href="#" className="studio-brand">
@@ -31,12 +63,32 @@ export default function Header() {
           </div>
         </a>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation with Active Scrollspy */}
         <nav className="desktop-nav" aria-label="Hauptnavigation">
-          <a href="#flaggschiff" className="nav-item">Flaggschiff</a>
-          <a href="#projekte" className="nav-item">Projekte</a>
-          <a href="#manifest" className="nav-item">Manifest</a>
-          <a href="#kontakt" className="nav-item">Beta-Zugang</a>
+          <a 
+            href="#flaggschiff" 
+            className={`nav-item ${activeSection === "flaggschiff" ? "is-active" : ""}`}
+          >
+            Flaggschiff
+          </a>
+          <a 
+            href="#projekte" 
+            className={`nav-item ${activeSection === "projekte" ? "is-active" : ""}`}
+          >
+            Projekte
+          </a>
+          <a 
+            href="#manifest" 
+            className={`nav-item ${activeSection === "manifest" ? "is-active" : ""}`}
+          >
+            Manifest
+          </a>
+          <a 
+            href="#kontakt" 
+            className={`nav-item ${activeSection === "kontakt" ? "is-active" : ""}`}
+          >
+            Beta-Zugang
+          </a>
         </nav>
 
         {/* Right CTA / Status */}
@@ -64,10 +116,34 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="mobile-nav-panel">
           <nav className="mobile-nav-list">
-            <a href="#flaggschiff" onClick={() => setMobileMenuOpen(false)}>01 Flaggschiff</a>
-            <a href="#projekte" onClick={() => setMobileMenuOpen(false)}>02 Projekte</a>
-            <a href="#manifest" onClick={() => setMobileMenuOpen(false)}>03 Manifest</a>
-            <a href="#kontakt" onClick={() => setMobileMenuOpen(false)}>04 Beta-Zugang</a>
+            <a 
+              href="#flaggschiff" 
+              className={activeSection === "flaggschiff" ? "is-active" : ""}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Flaggschiff
+            </a>
+            <a 
+              href="#projekte" 
+              className={activeSection === "projekte" ? "is-active" : ""}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Projekte
+            </a>
+            <a 
+              href="#manifest" 
+              className={activeSection === "manifest" ? "is-active" : ""}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Manifest
+            </a>
+            <a 
+              href="#kontakt" 
+              className={activeSection === "kontakt" ? "is-active" : ""}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Beta-Zugang
+            </a>
           </nav>
         </div>
       )}

@@ -5,16 +5,32 @@ import { toast } from "sonner";
 export default function Contact() {
   const [platform, setPlatform] = useState("ios"); // "ios" | "android"
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [copiedKey, setCopiedKey] = useState(null);
 
+  const validateEmail = (val) => {
+    const trimmed = val.trim();
+    if (!trimmed) {
+      return "Bitte gib eine E-Mail-Adresse ein.";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmed)) {
+      return "Bitte gib eine vollständige E-Mail-Adresse ein (z. B. name@domain.at).";
+    }
+    return "";
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !email.includes("@")) {
-      toast.error("Bitte gib eine gültige E-Mail-Adresse ein.");
+    const errorMsg = validateEmail(email);
+    if (errorMsg) {
+      setEmailError(errorMsg);
+      toast.error(errorMsg);
       return;
     }
+    setEmailError("");
 
     setLoading(true);
     setTimeout(() => {
@@ -41,10 +57,9 @@ export default function Contact() {
     <section id="kontakt" className="contact-architectural-section">
       <div className="container">
         
-        {/* Section Header with Instrument Serif */}
-        <div className="contact-header-row">
+        {/* Section Header */}
+        <div className="contact-header-row reveal-on-scroll">
           <div className="contact-title-group">
-            <span className="section-kicker-mono">BETA-PROGRAMM &amp; FRÜHZUGANG</span>
             <h2 className="contact-main-heading">
               Werde Teil der ersten <em>Test-Welle.</em>
             </h2>
@@ -55,13 +70,12 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* 2-Column Architectural Desk */}
+        {/* 2-Column Desk */}
         <div className="contact-desk-grid">
           
-          {/* LEFT: Direct Founder Desk & Studio Channels */}
-          <div className="founder-desk-column">
+          {/* LEFT: Direct Founder Desk & Channels */}
+          <div className="founder-desk-column reveal-on-scroll">
             <div className="desk-inner-content">
-              <span className="desk-kicker-mono">DIREKTER KONTAKT</span>
               <h3 className="desk-title">Studio Desk &amp; Gründerkontakt</h3>
               <p className="desk-text">
                 Hast du Feedback, Ideen für eine Kooperation oder möchtest du dich als Creator oder Event-Host vernetzen? Schreib direkt an unser Team.
@@ -109,11 +123,10 @@ export default function Contact() {
           </div>
 
           {/* RIGHT: Beta Access Form */}
-          <div className="beta-form-column">
+          <div className="beta-form-column reveal-on-scroll">
             {!submitted ? (
               <form onSubmit={handleSubmit} className="architectural-form">
                 <div className="form-head-meta">
-                  <span className="form-step-tag">SCHRITT 1 VON 1 · KOSTENLOS</span>
                   <h3 className="form-main-title">Frühzugang sichern</h3>
                   <p className="form-sub-desc">Wähle dein Betriebssystem für die Beta-Einladung:</p>
                 </div>
@@ -149,14 +162,24 @@ export default function Contact() {
                       type="email"
                       inputMode="email"
                       autoComplete="email"
-                      className="architectural-input"
+                      className={`architectural-input ${emailError ? "has-error" : ""}`}
                       placeholder="name@beispiel.at"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (emailError) setEmailError("");
+                      }}
+                      aria-invalid={!!emailError}
+                      aria-describedby={emailError ? "beta-email-error" : undefined}
                       required
                       disabled={loading}
                     />
                   </div>
+                  {emailError && (
+                    <span id="beta-email-error" className="field-error-msg" role="alert">
+                      {emailError}
+                    </span>
+                  )}
                 </div>
 
                 <button
@@ -187,6 +210,7 @@ export default function Contact() {
                   onClick={() => {
                     setSubmitted(false);
                     setEmail("");
+                    setEmailError("");
                   }}
                 >
                   <span>Weitere E-Mail registrieren</span>
