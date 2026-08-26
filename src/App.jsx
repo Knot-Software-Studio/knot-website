@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Toaster } from "sonner";
 import Header from "./components/Header.jsx";
+import CinematicVideoHero from "./components/CinematicVideoHero.jsx";
 import Hero from "./components/Hero.jsx";
 import InteractiveDeviceCanvas from "./components/InteractiveDeviceCanvas.jsx";
 import ProjectPipeline from "./components/ProjectPipeline.jsx";
@@ -9,7 +10,15 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 
 export default function App() {
+  const [introDismissed, setIntroDismissed] = useState(false);
+
   useEffect(() => {
+    // Force reload to always start at the very top on the video
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
     // Global Scroll Reveal Observer with threshold
     const revealElements = document.querySelectorAll(".reveal-on-scroll");
     const observer = new IntersectionObserver(
@@ -63,7 +72,7 @@ export default function App() {
       window.removeEventListener("scroll", onScroll);
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [introDismissed]);
 
   return (
     <div className="app-root">
@@ -100,8 +109,11 @@ export default function App() {
           },
         }}
       />
-      <Header />
+      <Header introDismissed={introDismissed} />
       <main>
+        {!introDismissed && (
+          <CinematicVideoHero onDismiss={() => setIntroDismissed(true)} />
+        )}
         <Hero />
         <InteractiveDeviceCanvas />
         <ProjectPipeline />

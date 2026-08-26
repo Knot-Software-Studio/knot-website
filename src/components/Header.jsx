@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
-export default function Header() {
+export default function Header({ introDismissed = false }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -19,6 +19,8 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isBrandDocked = introDismissed || scrolled;
 
   useEffect(() => {
     const sections = ["flaggschiff", "projekte", "manifest", "kontakt"];
@@ -48,8 +50,8 @@ export default function Header() {
         aria-hidden="true"
       />
       <div className="header-inner">
-        {/* Studio Brand Mark with Official Logo */}
-        <a href="#" className="studio-brand">
+        {/* Studio Brand Mark with Official Logo (Scroll-Linked Docking) */}
+        <a href="#" className={`studio-brand ${isBrandDocked ? "is-docked" : "at-top"}`}>
           <img 
             src="/assets/knot-logo.png" 
             alt="Knot Software Studio Logo" 

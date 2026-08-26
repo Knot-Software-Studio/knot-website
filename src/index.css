@@ -338,6 +338,220 @@ body {
 }
 
 /* ==========================================================================
+   CINEMATIC FULLSCREEN VIDEO HERO & SCROLL DOCKING STAGE (Apple Overdrive)
+   ========================================================================== */
+
+.cinematic-hero-stage {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 68px);
+  min-height: calc(100vh - 68px);
+  margin-top: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0 24px;
+  background: #08090E;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              margin-top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-hero-stage.is-dismissing {
+  opacity: 0;
+  transform: translateY(-60px) scale(0.98);
+  pointer-events: none;
+}
+
+.cinematic-backdrop-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cinematic-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.92;
+  filter: saturate(1.12) contrast(1.06) brightness(0.96);
+}
+
+.cinematic-vignette-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(8, 9, 14, 0.05) 0%, rgba(8, 9, 14, 0.42) 100%);
+  pointer-events: none;
+}
+
+/* Subtle 48px Feather Blend Underneath Video */
+.cinematic-underneath-blur {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(8, 9, 14, 0.3) 50%,
+    var(--bg-canvas) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cinematic-center-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cinematic-brand-capsule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cinematic-logo-halo {
+  width: 96px;
+  height: 96px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(190, 192, 233, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.cinematic-hero-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.cinematic-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.8rem, 8vw, 6.8rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+}
+
+.cinematic-hero-slogan {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  font-style: italic;
+  color: var(--brand-frost);
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+.cinematic-origin-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(14, 16, 23, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Interactive Apple Pill Button with Animated Arrow */
+.cinematic-scroll-pill-btn {
+  margin-top: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(14, 16, 23, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
+  padding: 8px 10px 8px 22px;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: transform var(--duration-fast) var(--ease-press),
+              border-color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.cinematic-scroll-pill-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(190, 192, 233, 0.4);
+  background: rgba(20, 24, 38, 0.95);
+  box-shadow: 0 20px 50px -6px rgba(0, 0, 0, 0.9), 0 0 24px rgba(190, 192, 233, 0.2);
+}
+
+.cinematic-scroll-pill-btn:active {
+  transform: scale(0.96);
+}
+
+.scroll-pill-text {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+.scroll-arrow-disc {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--brand-frost);
+  color: #08090E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-arrow-anim {
+  animation: cue-float 2.4s infinite cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes cue-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ==========================================================================
    HEADER (Apple-Style Translucent Frosted Glass & Floating Nav)
    ========================================================================== */
 
@@ -381,7 +595,20 @@ body {
   align-items: center;
   gap: 12px;
   text-decoration: none;
-  transition: opacity var(--duration-fast) var(--ease-out);
+  transition: opacity var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+}
+
+.studio-brand.at-top {
+  opacity: 0;
+  transform: translateY(6px) scale(0.92);
+  pointer-events: none;
+}
+
+.studio-brand.is-docked {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 .studio-brand:hover {
