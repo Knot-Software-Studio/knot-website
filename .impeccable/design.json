@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-26T18:50:00Z",
+  "title": "Design System: Knot Software Studio",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Knot Terracotta", "canonical": "#F97316", "tonalRamp": ["#451A03", "#7C2D12", "#9A3412", "#C2410C", "#EA580C", "#F97316", "#FB923C", "#FDBA74"] },
+      "accent-blue": { "role": "secondary", "displayName": "Alpine Blue", "canonical": "#38BDF8", "tonalRamp": ["#082F49", "#0C4A6E", "#0369A1", "#0284C7", "#0EA5E9", "#38BDF8", "#7DD3FC", "#BAE6FD"] },
+      "accent-green": { "role": "tertiary", "displayName": "Emerald Settlement", "canonical": "#34D399", "tonalRamp": ["#022C22", "#064E3B", "#065F46", "#047857", "#059669", "#10B981", "#34D399", "#6EE7B7"] },
+      "canvas": { "role": "neutral", "displayName": "Deep Obsidian Canvas", "canonical": "#09090B", "tonalRamp": ["#000000", "#09090B", "#121215", "#18181C", "#27272A", "#3F3F46", "#71717A", "#F4F4F5"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headlines and manifesto statements." },
+      "headline": { "displayName": "Headline", "purpose": "Major section headings." },
+      "title": { "displayName": "Title", "purpose": "Component and bento card headings." },
+      "body": { "displayName": "Body", "purpose": "Paragraph text and explanations." },
+      "label": { "displayName": "Label", "purpose": "Badges, pills, and metadata." }
+    },
+    "shadows": [
+      { "name": "shadow-subtle", "value": "0 2px 8px rgba(0, 0, 0, 0.4)", "purpose": "Subtle elevation for pills and tags." },
+      { "name": "shadow-card", "value": "0 12px 32px -4px rgba(0, 0, 0, 0.6), 0 2px 6px -1px rgba(0, 0, 0, 0.4)", "purpose": "Container and bento card depth." },
+      { "name": "shadow-phone", "value": "0 32px 80px -16px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1)", "purpose": "Interactive phone chassis elevation." }
+    ],
+    "motion": [
+      { "name": "ease-smooth", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Decelerated natural spring-like easing." },
+      { "name": "duration-fast", "value": "160ms", "purpose": "Immediate tactile micro-interactions." },
+      { "name": "duration-normal", "value": "260ms", "purpose": "View and card transitions." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main call-to-action button with terracotta accent background.",
+      "html": "<button class=\"ds-btn-primary\">Beta-Zugang anfordern</button>",
+      "css": ".ds-btn-primary { background: #F97316; color: #FFFFFF; padding: 14px 28px; border-radius: 9999px; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.25); transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), background 160ms; } .ds-btn-primary:hover { background: #EA580C; } .ds-btn-primary:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Secondary action button with dark glass background and border.",
+      "html": "<button class=\"ds-btn-secondary\">Event-Planer testen</button>",
+      "css": ".ds-btn-secondary { background: #18181C; color: #F4F4F5; padding: 14px 28px; border-radius: 9999px; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 0.95rem; border: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), background 160ms; } .ds-btn-secondary:hover { background: #222228; border-color: rgba(255, 255, 255, 0.14); } .ds-btn-secondary:active { transform: scale(0.97); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Tactile Studio Machine",
+    "overview": "Knot's visual world reflects independent Austrian software craftsmanship. It pairs deep obsidian canvas depths (#09090B) with precision translucent glass membranes (rgba(18, 18, 21, 0.82)), subtle specular edge illumination, and warm Knot Terracotta accents (#F97316). The interface avoids noisy decorations and gradient text in favor of solid typography, crisp physical boundaries, and sub-100ms tactile feedback.",
+    "keyCharacteristics": [
+      "Deep obsidian backgrounds with optical contrast layering",
+      "Frosted glass containers with diffused multi-layer shadows",
+      "Fluid decelerating motion curves (cubic-bezier(0.16, 1, 0.3, 1))",
+      "Apple Human Interface restraint meets Material 3 Expressive responsiveness"
+    ],
+    "rules": [
+      { "name": "The Single-Accent Restraint Rule", "body": "Primary terracotta is used strictly for meaningful actions and active focus indicators. Never splash accent color across decorative backgrounds or text gradients.", "section": "colors" }
+    ],
+    "dos": [
+      "Do maintain high contrast (≥ 4.5:1 for body copy on obsidian grounds).",
+      "Do use exponential ease-out curves (cubic-bezier(0.16, 1, 0.3, 1)) for all state transitions.",
+      "Do build tangible, interactive product demonstrations that prove actual features."
+    ],
+    "donts": [
+      "Don't use gradient text or decorative text clipping.",
+      "Don't add eyebrow kickers above headings.",
+      "Don't animate layout properties like width, height, or padding.",
+      "Don't add bounce or spring jitter effects to CSS transitions."
+    ]
+  }
+}
